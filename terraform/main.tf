@@ -25,7 +25,7 @@ resource "aws_instance" "single_server" {
               chmod +x /usr/local/bin/docker-compose
 
               # Clone the repository and start services
-              git clone https://github.com/djdiegotorres/Comments-API.git /home/ec2-user/Comments-API
+              git clone https://github.com/djdiegotorres/Comments-API-v2.git /home/ec2-user/Comments-API
               chown -R ec2-user:ec2-user /home/ec2-user/Comments-API
               cd /home/ec2-user/Comments-API
               docker-compose up -d

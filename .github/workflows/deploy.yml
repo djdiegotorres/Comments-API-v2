@@ -21,7 +21,7 @@ jobs:
         source: "."
         target: "/home/ec2-user/app"
 
-    - name: Rodar container remotamente
+    - name: Rodar containers remotamente com Docker Compose
       uses: appleboy/ssh-action@v0.1.10
       with:
         host: ${{ secrets.EC2_HOST }}
@@ -29,16 +29,15 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
           cd /home/ec2-user/app
-          docker stop nodeapi || true
-          docker rm nodeapi || true
-          docker build -t nodeapi .
-          docker run -d -p 3000:3000 --name nodeapi nodeapi
+          docker-compose down || true # Parar e remover containers existentes
+          docker-compose up -d --build # Construir e iniciar os serviços em background
 
-    - name: Ver logs do container
+    - name: Ver logs dos containers
       uses: appleboy/ssh-action@v0.1.10
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ec2-user
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
-          docker logs nodeapi --tail=30
+          docker-compose logs --tail=30
+
