@@ -45,6 +45,4 @@ jobs:
         script: |
           cd /home/ec2-user/app
           sudo docker-compose -f docker-compose.yml logs --tail=30
-          #!/bin/sh
-          npx knex migrate:latest
-          node index.js
+          sudo docker-compose exec -T nodeapi npx knex migrate:latest
