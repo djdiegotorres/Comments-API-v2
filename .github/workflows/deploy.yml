@@ -29,6 +29,8 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
           cd /home/ec2-user/app
+           docker stop nodeapi || true
+          docker rm nodeapi || true
           docker-compose down || true # Parar e remover containers existentes
           docker-compose up -d --build # Construir e iniciar os serviços em background
 
