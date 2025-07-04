@@ -44,8 +44,8 @@ jobs:
         script: |
           cd /home/ec2-user/app
           sudo docker-compose ps
-          # Rodar migração apenas se o container app-api estiver ativo
-          sudo docker-compose exec -T app-api npx knex migrate:latest
+          # Rodar migração apenas se o container api estiver ativo
+          sudo docker-compose exec -T api npx knex migrate:latest
 
     - name: Ver logs dos containers
       uses: appleboy/ssh-action@v0.1.10
