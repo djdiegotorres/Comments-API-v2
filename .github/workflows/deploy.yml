@@ -31,8 +31,8 @@ jobs:
           cd /home/ec2-user/app
           # Matar qualquer processo que esteja usando a porta 3000
           sudo lsof -t -i:3000 | xargs -r sudo kill -9
-          docker-compose down || true # Parar e remover containers existentes
-          docker-compose up -d --build # Construir e iniciar os serviços em background
+          docker-compose -f docker-compose.yml down || true # Parar e remover containers existentes
+          docker-compose -f docker-compose.yml up -d --build # Construir e iniciar os serviços em background
 
     - name: Ver logs dos containers
       uses: appleboy/ssh-action@v0.1.10
@@ -41,4 +41,4 @@ jobs:
         username: ec2-user
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
-          docker-compose logs --tail=30
+          docker-compose -f docker-compose.yml logs --tail=30
