@@ -239,8 +239,3 @@ Receber alertas por e-mail, SMS ou Telegram
 
  Monitor externo com UptimeRobot
 
-
-📮 Contato
-
-Diego Torres
->>>>>>> 894704578abce4295fb861e79de988b18607359e
