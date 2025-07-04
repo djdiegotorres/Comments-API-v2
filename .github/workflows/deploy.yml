@@ -29,12 +29,23 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
           cd /home/ec2-user/app
-          # Debug: Listar conteúdo do diretório para verificar arquivos e permissões
-          ls -l /home/ec2-user/app/
           # Matar qualquer processo que esteja usando a porta 3000
           sudo lsof -t -i:3000 | xargs -r sudo kill -9
-          sudo docker-compose -f docker-compose.yml down || true # Parar e remover containers existentes
-          sudo docker-compose -f docker-compose.yml up -d --build # Construir e iniciar os serviços em background
+          # Subir containers
+          sudo docker-compose down || true
+          sudo docker-compose up -d --build
+
+    - name: Rodar migrações com Knex dentro do container
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ec2-user
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          cd /home/ec2-user/app
+          sudo docker-compose ps
+          # Rodar migração apenas se o container nodeapi estiver ativo
+          sudo docker-compose exec -T nodeapi npx knex migrate:latest
 
     - name: Ver logs dos containers
       uses: appleboy/ssh-action@v0.1.10
@@ -44,5 +55,4 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
           cd /home/ec2-user/app
-          sudo docker-compose -f docker-compose.yml logs --tail=30
-          sudo docker-compose exec -T nodeapi npx knex migrate:latest
+          sudo docker-compose logs --tail=30
