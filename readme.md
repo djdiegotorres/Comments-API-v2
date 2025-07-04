@@ -39,7 +39,10 @@ npx knex migrate:latest
 
 # Iniciar o servidor
 node index.js
+
+
 🐳 Como rodar com Docker
+
 bash
 Copiar
 Editar
@@ -48,7 +51,10 @@ docker-compose up -d --build
 
 # Rodar as migrations dentro do container
 docker-compose exec -T api npx knex migrate:latest
+
+
 📁 Estrutura do Projeto
+
 kotlin
 Copiar
 Editar
@@ -65,7 +71,10 @@ Editar
 │   └── comments.db
 ├── prometheus.yml
 └── README.md
+
+
 ☁️ Infraestrutura na AWS com Terraform
+
 Provisione a instância EC2 com Terraform (exemplo básico):
 
 hcl
@@ -93,7 +102,10 @@ resource "aws_instance" "node_api" {
     ]
   }
 }
+
+
 🚀 Deploy Automatizado (GitHub Actions)
+
 deploy.yml
 yaml
 Copiar
@@ -143,7 +155,10 @@ jobs:
         script: |
           cd /home/ec2-user/app
           sudo docker-compose exec -T api npx knex migrate:latest
+
+
 📊 Monitoramento com Prometheus + Grafana
+
 Prometheus
 Porta: 9090
 
@@ -169,14 +184,19 @@ app.get('/metrics', async (req, res) => {
   res.set('Content-Type', client.register.contentType);
   res.end(await client.register.metrics());
 });
+
+
 🌐 Monitoramento Externo com UptimeRobot
+
 Criar monitor HTTP
 
 Inserir URL pública da instância EC2
 
 Receber alertas por e-mail, SMS ou Telegram
 
+
 ✅ Checklist de Deploy
+
  API funcional localmente
 
  Banco SQLite persistido em volume
@@ -191,5 +211,7 @@ Receber alertas por e-mail, SMS ou Telegram
 
  Monitor externo com UptimeRobot
 
+
 📮 Contato
+
 Diego Torres
