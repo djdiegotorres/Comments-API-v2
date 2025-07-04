@@ -2,8 +2,11 @@ module.exports = {
   development: {
     client: 'sqlite3',
     connection: {
-      filename: './comments.db'
+      filename: './data/comments.db' // use um caminho com diretório
     },
-    useNullAsDefault: true
+    migrations: {
+      directory: './migrations'
+    },
+    useNullAsDefault: true,
   }
 };
