@@ -29,8 +29,8 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
           cd /home/ec2-user/app
-           docker stop nodeapi || true
-          docker rm nodeapi || true
+          # Matar qualquer processo que esteja usando a porta 3000
+          sudo lsof -t -i:3000 | xargs -r sudo kill -9
           docker-compose down || true # Parar e remover containers existentes
           docker-compose up -d --build # Construir e iniciar os serviços em background
 
@@ -42,4 +42,3 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
           docker-compose logs --tail=30
-
